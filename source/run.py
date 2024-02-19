@@ -22,7 +22,7 @@ if __name__ == "__main__":
     plt.show()
 
     # Process next frames
-    for frame_no in range(1, 250):
+    for frame_no in range(1, 4500):
         curr_frame_BGR = dataset_reader.readFrame(frame_no)
         prev_frame = cv2.cvtColor(prev_frame_BGR, cv2.COLOR_BGR2GRAY)
         curr_frame = cv2.cvtColor(curr_frame_BGR, cv2.COLOR_BGR2GRAY)
@@ -48,7 +48,8 @@ if __name__ == "__main__":
         if kitti_scale <= 0.1:
             continue
 
-        camera_pos = camera_pos + kitti_scale * camera_rot.dot(T)
+        # camera_pos = camera_pos + kitti_scale * camera_rot.dot(T)
+        camera_pos = camera_pos + camera_rot.dot(T)
         camera_rot = R.dot(camera_rot)
 
         kitti_positions.append(kitti_pos)
