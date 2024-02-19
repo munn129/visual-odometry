@@ -1,5 +1,5 @@
 import cv2
-import plyfile
+# import plyfile
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -10,7 +10,7 @@ from utils import drawFrameFeatures, updateTrajectoryDrawing, savePly
 if __name__ == "__main__":
     tracker = FeatureTracker()
     detector = cv2.GFTTDetector_create()
-    dataset_reader = DatasetReaderKITTI("../videos/KITTI/sequences/00/")
+    dataset_reader = DatasetReaderKITTI("../../00/")
 
     K = dataset_reader.readCameraMatrix()
 
@@ -33,17 +33,18 @@ if __name__ == "__main__":
     
         # Feature tracking (optical flow)
         prev_points, curr_points = tracker.trackFeatures(prev_frame, curr_frame, prev_points, removeOutliers=True)
-        print (f"{len(curr_points)} features left after feature tracking.")
+        # print (f"{len(curr_points)} features left after feature tracking.")
 
         # Essential matrix, pose estimation
         E, mask = cv2.findEssentialMat(curr_points, prev_points, K, cv2.RANSAC, 0.99, 1.0, None)
         prev_points = np.array([pt for (idx, pt) in enumerate(prev_points) if mask[idx] == 1])
         curr_points = np.array([pt for (idx, pt) in enumerate(curr_points) if mask[idx] == 1])
         _, R, T, _ = cv2.recoverPose(E, curr_points, prev_points, K)
-        print(f"{len(curr_points)} features left after pose estimation.")
+        # print(f"{len(curr_points)} features left after pose estimation.")
 
         # Read groundtruth translation T and absolute scale for computing trajectory
         kitti_pos, kitti_scale = dataset_reader.readGroundtuthPosition(frame_no)
+        print(f'\r scale: {kitti_scale}', end='')
         if kitti_scale <= 0.1:
             continue
 
