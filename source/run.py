@@ -48,7 +48,7 @@ if __name__ == "__main__":
         if kitti_scale <= 0.1:
             continue
 
-        # camera_pos = camera_pos + kitti_scale * camera_rot.dot(T)
+        camera_pos_s = camera_pos + kitti_scale * camera_rot.dot(T)
         camera_pos = camera_pos + camera_rot.dot(T)
         camera_rot = R.dot(camera_rot)
 
