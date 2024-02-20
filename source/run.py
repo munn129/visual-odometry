@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
         kitti_positions.append(kitti_pos)
         track_positions.append(camera_pos_s)
-        # drawGraph(kitti_scales)
+        drawGraph(kitti_scales)
         updateTrajectoryDrawing(np.array(track_positions), np.array(kitti_positions))
         drawFrameFeatures(curr_frame, prev_points, curr_points, frame_no)
 
