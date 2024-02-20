@@ -56,10 +56,10 @@ if __name__ == "__main__":
         camera_rot = R.dot(camera_rot)
 
         kitti_positions.append(kitti_pos)
-        track_positions.append(camera_pos)
-        drawGraph(kitti_scales)
-        # updateTrajectoryDrawing(np.array(track_positions), np.array(kitti_positions))
-        # drawFrameFeatures(curr_frame, prev_points, curr_points, frame_no)
+        track_positions.append(camera_pos_s)
+        # drawGraph(kitti_scales)
+        updateTrajectoryDrawing(np.array(track_positions), np.array(kitti_positions))
+        drawFrameFeatures(curr_frame, prev_points, curr_points, frame_no)
 
         if cv2.waitKey(1) == ord('q'):
             break

@@ -47,7 +47,8 @@ class DatasetReaderKITTI:
             _, _, _, tx_prev, _, _, _, ty_prev, _, _, _, tz_prev = list(map(float, lines[frameId-1].rstrip().split(" ")))
     
             position = (tx, ty, tz)
-            scale = sqrt((tx-tx_prev)**2 + (ty-ty_prev)**2  + (tz-tz_prev)**2)
+            # scale = sqrt((tx-tx_prev)**2 + (ty-ty_prev)**2  + (tz-tz_prev)**2)
+            scale = sqrt((tx-tx_prev)**2 + (ty-ty_prev)**2 )
             
             return position, scale
 
