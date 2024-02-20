@@ -26,6 +26,14 @@ def updateTrajectoryDrawing(trackedPoints, groundtruthPoints):
     plt.draw()
     plt.pause(0.01)
 
+def drawGraph(val):
+    plt.cla()
+    plt.plot(val, c='blue', label = 'val')
+    plt.title('d')
+    plt.legend()
+    plt.draw()
+    plt.pause(0.01)
+
 def savePly(points, colors, output_file):
     vertexes = [ (p[0], p[1], p[2], c[0], c[1], c[2]) for p, c in zip(points, colors)]
     vertexes = [ v for v in vertexes if v[2] >= 0 ] # Discard negative z

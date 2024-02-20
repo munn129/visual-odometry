@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from kitti_reader import DatasetReaderKITTI
 from feature_tracking import FeatureTracker
-from utils import drawFrameFeatures, updateTrajectoryDrawing, savePly
+from utils import drawFrameFeatures, updateTrajectoryDrawing, drawGraph
 
 if __name__ == "__main__":
     tracker = FeatureTracker()
@@ -18,6 +18,8 @@ if __name__ == "__main__":
     prev_frame_BGR = dataset_reader.readFrame(0)
     kitti_positions, track_positions = [], []
     camera_rot, camera_pos = np.eye(3), np.zeros((3,1))
+
+    kitti_scales = []
 
     plt.show()
 
@@ -44,6 +46,7 @@ if __name__ == "__main__":
 
         # Read groundtruth translation T and absolute scale for computing trajectory
         kitti_pos, kitti_scale = dataset_reader.readGroundtuthPosition(frame_no)
+        kitti_scales.append(kitti_scale)
         print(f'\r scale: {kitti_scale}', end='')
         if kitti_scale <= 0.1:
             continue
@@ -54,8 +57,9 @@ if __name__ == "__main__":
 
         kitti_positions.append(kitti_pos)
         track_positions.append(camera_pos)
-        updateTrajectoryDrawing(np.array(track_positions), np.array(kitti_positions))
-        drawFrameFeatures(curr_frame, prev_points, curr_points, frame_no)
+        drawGraph(kitti_scales)
+        # updateTrajectoryDrawing(np.array(track_positions), np.array(kitti_positions))
+        # drawFrameFeatures(curr_frame, prev_points, curr_points, frame_no)
 
         if cv2.waitKey(1) == ord('q'):
             break
